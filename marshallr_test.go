@@ -8,6 +8,7 @@ import (
 type T1 struct {
 	A int
 	B string
+	C string `json:",omitempty"`
 }
 
 func (t1 T1) MarshalJSON() ([]byte, error) {
@@ -34,7 +35,7 @@ func (t3 T3) MarshalJSON() ([]byte, error) {
 }
 
 func Test1(t *testing.T) {
-	sitem := T1{23, "skidoo"}
+	sitem := T1{23, "skidoo", "1"}
 	item := T2{134, "yes", sitem}
 
 	//b, err := item.MarshalJSON()
@@ -56,3 +57,16 @@ func Test2(t *testing.T) {
 
 	t.Logf("Result: %s\n", string(b))
 }
+
+func Test3(t *testing.T) {
+	sitem := T1{23, "skidoo", ""}
+
+	b, err := json.Marshal(sitem)
+	if err != nil {
+		t.Errorf("Error %v", err)
+	}
+
+	t.Logf("Result: %s\n", string(b))
+}
+
+
